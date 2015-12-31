@@ -1,4 +1,4 @@
-d3.json("county.json", function(topodata) {
+d3.json("http://dorisofsky.github.io/taiwan_realtime2/county.json", function(topodata) {
       var features = topojson.feature(topodata, topodata.objects["county"]).features;
       // 這裡要注意的是 topodata.objects["county"] 中的 "county" 為原本 shp 的檔名
 
