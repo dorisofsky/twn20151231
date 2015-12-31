@@ -1,8 +1,10 @@
-d3.json("http://dorisofsky.github.io/taiwan_realtime2/county.json", function(error, tw) {
-  if (error) return console.error(error);
+d3.json("county.json", function(topodata) {
+      var features = topojson.feature(topodata, topodata.objects["county"]).features;
+      // 這裡要注意的是 topodata.objects["county"] 中的 "county" 為原本 shp 的檔名
 
-  svg.append("path")
-      .datum(topojson.feature(tw, tw.objects.county))
-      .attr("d", d3.geo.path().projection(d3.geo.mercator()));
-});
-
+   var path = d3.geo.path().projection( // 路徑產生器
+    d3.geo.mercator().center([121,24]).scale(6000) // 座標變換函式
+  );
+  d3.select("svg").selectAll("path").data(features)
+    .enter().append("path").attr("d",path);
+  });
